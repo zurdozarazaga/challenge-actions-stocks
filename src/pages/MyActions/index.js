@@ -4,31 +4,29 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { getStockAllAction } from "../../actions/createActions";
 import { stockSelected } from "../../actions/createActions";
+import { Link } from "react-router-dom";
 
 const MyActions = () => {
   const [stockSelectedValue, setStockSelectedValue] = useState([]);
   console.log(stockSelectedValue);
-  const dispatch = useDispatch()
-  const stocksAll = useSelector(state => state.stocks)
-  const stockSelectedInput = useSelector(state => state.stock)
-  console.log(stocksAll)
-  console.log(stockSelectedInput)
-  
+  const dispatch = useDispatch();
+  const stocksAll = useSelector((state) => state.stocks);
+  const stockSelectedInput = useSelector((state) => state.stock);
+  console.log(stocksAll);
+  console.log(stockSelectedInput);
 
   useEffect(() => {
-    dispatch(getStockAllAction())
-  }
-  , [dispatch]);
+    dispatch(getStockAllAction());
+  }, [dispatch]);
 
   useEffect(() => {
-    setStockSelectedValue(stockSelectedInput)
-  },[ stockSelectedInput ])
-    
+    setStockSelectedValue(stockSelectedInput);
+  }, [stockSelectedInput]);
 
-  const handleChangeStocks = (e,newValue) => {
-    dispatch(stockSelected(newValue))
-    console.log('newValue',newValue)
-    e.reset()
+  const handleChangeStocks = (e, newValue) => {
+    dispatch(stockSelected(newValue));
+    console.log("newValue", newValue);
+    e.reset();
   };
 
   return (
@@ -37,11 +35,10 @@ const MyActions = () => {
         <Autocomplete
           disablePortal
           onChange={(event, newValue) => {
-            handleChangeStocks(event,newValue);
-        }}
+            handleChangeStocks(event, newValue);
+          }}
           id="combo-box-demo"
           options={stocksAll}
-
           getOptionLabel={(option) => option.name || ""}
           sx={{ width: 300 }}
           renderOption={(props, option) => {
@@ -64,14 +61,20 @@ const MyActions = () => {
           </tr>
         </thead>
         <tbody className="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full">
-        { stockSelectedValue.map(stock => (
-        <tr className="flex w-full mb-4" key={stock.symbol}>
-        <td className="p-4 w-1/4">{ stock.symbol }</td>
-            <td className="p-4 w-1/4">{ stock.name }</td>
-            <td className="p-4 w-1/4">{ stock.currency }</td>
-            <td className="p-4 w-1/4"></td>
-        </tr>
-        ))}
+          {stockSelectedValue.map((stock) => (
+            <tr className="flex w-full mb-4" key={stock.symbol}>
+              <td className="p-4 w-1/4">
+                <Link to="/Details" >{stock.symbol}</Link>
+              </td>
+              <td className="p-4 w-1/4">{stock.name}</td>
+              <td className="p-4 w-1/4">{stock.currency}</td>
+              <td className="p-4 w-1/4">
+                <button className="bg-red-600 text-white p-2 rounded-lg">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
