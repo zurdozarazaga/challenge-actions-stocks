@@ -7,11 +7,16 @@ const stocksSlice = createSlice({
     loading: false,
     error: null,
     stocks: [],
-    stock: [],
+    stock: [
+    ],
   },
   reducers: {
-    stockSelected: (state, {payload}) => {
+    addStock: (state, {payload}) => {
       state.stock = [...state.stock,payload]
+  },
+  deleteStock: (state, {payload}) => {
+    console.log('deleteStock', payload)
+    state.stock = state.stock.filter(stock => stock.name !== payload)
   },
   },
   extraReducers: {
