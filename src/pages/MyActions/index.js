@@ -24,7 +24,7 @@ const MyActions = () => {
 
   const handleChangeStocks = (e, newValue) => {
     dispatch(addStock(newValue));
-    console.log("newValue", newValue);
+
   };
 
   const handleClickDelete = (name) => {
